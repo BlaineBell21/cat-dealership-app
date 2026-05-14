@@ -18,7 +18,6 @@ public class UserInterface {
         this.scanner = new Scanner(System.in);
         this.fileManager = new DealershipFileManager();
     }
-
     public void display() {
         init();
 
