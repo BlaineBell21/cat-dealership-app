@@ -17,7 +17,6 @@ public class UserInterface {
     public UserInterface() {
         this.fileManager = new DealershipFileManager();
     }
-
     public void display() {
         init();
 
