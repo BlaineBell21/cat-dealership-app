@@ -50,7 +50,6 @@ public class UserInterface {
         }
         System.out.println();
     }
-
     private void handleMenuChoice(MenuOption option) {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
