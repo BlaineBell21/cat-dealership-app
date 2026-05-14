@@ -57,7 +57,6 @@ public class UserInterface {
             System.out.println("Invalid option. Please try again.");
             return;
         }
-
         switch (option) {
             case FIND_BY_PRICE -> processGetByPriceRequest();
             case FIND_BY_MAKE_MODEL -> processGetByMakeModelRequest();
