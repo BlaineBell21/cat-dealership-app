@@ -7,15 +7,14 @@ import com.skills4it.dealership.models.enums.VehicleType;
 import com.skills4it.dealership.ui.enums.MenuOption;
 
 import java.util.List;
-import java.util.Scanner;
+
+import static com.skills4it.dealership.ui.Helpers.*;
 
 public class UserInterface {
-    private final Scanner scanner;
     private final DealershipFileManager fileManager;
     private Dealership dealership;
 
     public UserInterface() {
-        this.scanner = new Scanner(System.in);
         this.fileManager = new DealershipFileManager();
     }
 
@@ -69,7 +68,8 @@ public class UserInterface {
             case LIST_ALL -> processAllVehiclesRequest();
             case ADD_VEHICLE -> processAddVehicleRequest();
             case REMOVE_VEHICLE -> processRemoveVehicleRequest();
-            case QUIT -> { }
+            case QUIT -> {
+            }
         }
     }
 
@@ -172,95 +172,5 @@ public class UserInterface {
         System.out.println("---------------------------------------------------------------------------------------");
         System.out.println("Total vehicles: " + vehicles.size());
         pause();
-    }
-
-    private String readString(String prompt) {
-        System.out.print(prompt);
-        return scanner.nextLine().trim();
-    }
-
-    private String readRequiredString(String prompt) {
-        while (true) {
-            String value = readString(prompt);
-            if (!value.isBlank()) {
-                return value;
-            }
-            System.out.println("This field is required. Please try again.");
-        }
-    }
-
-    private VehicleType readVehicleType(String prompt) {
-        while (true) {
-            String input = readRequiredString(prompt);
-            var vehicleType = VehicleType.fromString(input);
-
-            if (vehicleType.isPresent()) {
-                return vehicleType.get();
-            }
-
-            System.out.println("Invalid vehicle type. Allowed values: " + VehicleType.getAllowedValuesText());
-        }
-    }
-
-    private int readInt(String prompt) {
-        while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine().trim();
-
-            try {
-                return Integer.parseInt(input);
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a whole number.");
-            }
-        }
-    }
-
-    private int readPositiveInt(String prompt) {
-        while (true) {
-            int number = readInt(prompt);
-            if (number >= 0) {
-                return number;
-            }
-            System.out.println("Please enter a positive number.");
-        }
-    }
-
-    private int readYear(String prompt) {
-        while (true) {
-            int year = readInt(prompt);
-            if (year >= 1886 && year <= 2100) {
-                return year;
-            }
-            System.out.println("Please enter a realistic vehicle year between 1886 and 2100.");
-        }
-    }
-
-    private double readDouble(String prompt) {
-        while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine().trim();
-
-            try {
-                return Double.parseDouble(input);
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number, for example 1995.00.");
-            }
-        }
-    }
-
-    private double readPositiveDouble(String prompt) {
-        while (true) {
-            double number = readDouble(prompt);
-            if (number >= 0) {
-                return number;
-            }
-            System.out.println("Please enter a positive number.");
-        }
-    }
-
-    private void pause() {
-        System.out.println();
-        System.out.print("Press Enter to continue...");
-        scanner.nextLine();
     }
 }
