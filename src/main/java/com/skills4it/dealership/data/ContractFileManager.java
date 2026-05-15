@@ -38,7 +38,7 @@ public class ContractFileManager {
             FileWriter fileWriter = new FileWriter("contracts.csv", true);
             PrintWriter printWriter = new PrintWriter(fileWriter);
 
-            printWriter.println(contract);
+            printWriter.println(contract.toString());
 
             printWriter.close();
             System.out.println("contract saved");

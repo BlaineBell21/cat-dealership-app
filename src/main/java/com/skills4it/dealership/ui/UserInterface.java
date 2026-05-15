@@ -129,18 +129,17 @@ public class UserInterface {
                 case 1: //sell
                     option = "sell";
                     vehicleSellAndLeaseService(option);
-                    break;
+                   return;
                 case 2://lease
                     option = "lease";
                     vehicleSellAndLeaseService(option);
-                    break;
+                    return;
                 default:
                     wrongInput();
             }
         }
     }
     public void vehicleSellAndLeaseService(String option) {
-        boolean isDone = false;
 
         String name = readString("Enter in your name: ");
         String email = readString("Enter in your email: ");
