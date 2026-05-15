@@ -77,10 +77,13 @@ public class Dealership {
                 .toList();
     }
 
-    public List<Vehicle> getVehiclesByVin(int vin) {
-        return inventory.stream()
-                .filter(vehicle -> vehicle.getVin() == vin)
-                .toList();
+    public Vehicle getVehiclesByVin(int vin) {
+        for (Vehicle vehicle : inventory){
+            if (vehicle.getVin() == vin){
+                return vehicle;
+            }
+        }
+        return null;
     }
 
     public List<Vehicle> getVehiclesByMileage(int minMileage, int maxMileage) {

@@ -119,22 +119,23 @@ public class UserInterface {
         boolean isDoneChoosing = false;
         while (!isDoneChoosing) {
             String option = "";
-            String sellOrLease = readString("Would you like to sell or lease a vehicle?\n" +
+            int sellOrLease = readInt("Would you like to sell or lease a vehicle?\n" +
                     "1) Sell\n" +
                     "2) Lease\n" +
-                    "Enter in the number of the option you'd like to choose: ").toLowerCase().trim();
+                    "Enter in the number of the option you'd like to choose: ");
             switch (sellOrLease) {
-                case "1": //sell
+                case 1: //sell
                     option = "sell";
                     ContractFileManager.vehicleSellAndLeaseService(option);
-                case "2"://lease
+                case 2://lease
                     option = "lease";
                     ContractFileManager.vehicleSellAndLeaseService(option);
                 default:
-                    System.out.println("Incorrect input. Try again.");
+                    wrongInput();
             }
         }
     }
+
 
     private void processAddVehicleRequest() {
         System.out.println("Add a new vehicle");
@@ -197,5 +198,8 @@ public class UserInterface {
         System.out.println("---------------------------------------------------------------------------------------");
         System.out.println("Total vehicles: " + vehicles.size());
         pause();
+    }
+    public static void wrongInput(){
+        System.out.println("Incorrect input. Try again.");
     }
 }

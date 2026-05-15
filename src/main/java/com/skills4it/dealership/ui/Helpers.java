@@ -71,6 +71,17 @@ public class Helpers {
         }
     }
 
+    public static boolean readBoolean(String prompt){
+        while(true){
+           String answer = readString(prompt);
+           if (answer.equals("yes")){
+               return true;
+           } else if(answer.equals("no")) {
+               return false;
+           }
+        }
+    }
+
     public static double readDouble(String prompt) {
         while (true) {
             System.out.print(prompt);

@@ -13,6 +13,7 @@ import static com.skills4it.dealership.ui.Helpers.*;
 public class ContractFileManager {
     private static final Path INVENTORY_PATH = Path.of("src", "main", "resources", "contracts.csv");
     private static Dealership dealership;
+    private static SalesContract salesContract;
 
     public static void vehicleSellAndLeaseService(String option) {
         boolean isDone = false;
@@ -23,8 +24,17 @@ public class ContractFileManager {
             String email = readString("Enter in your email: ");
 
             int vin = readInt("Enter in the vin of your preferred vehicle: ");
-            LeaseContract salesContract = new SalesContract(printDate(), name,email, "", "","");
-            LeaseContract leaseContract = new SalesContract(printDate(), name,email, "", "","");
+            Vehicle foundVehicle = dealership.getVehiclesByVin(vin);
+
+            if (foundVehicle != null && option.equals("sell")){
+                boolean isFincanced = readBoolean("Would you like to finance your vehicle? Enter yes/no: ");
+                salesContract.getTotalPrice(foundVehicle);
+
+                LeaseContract salesContract = new SalesContract(printDate(), name, email,foundVehicle , ,"");
+            } else if (vehicleByVin != null && option.equals("lease")) {
+                LeaseContract leaseContract = new SalesContract(printDate(), name, email, foundVehicle, "","");
+            }
+
         }
     }
     public static void saveContract(Contract contract){

@@ -8,17 +8,18 @@ package com.skills4it.dealership.models;
 
 public class LeaseContract extends Contract{
 
-    public LeaseContract(String date, String customerName, String customerEmail, String vehicleSold, double totalPrice, double monthlyPayment) {
+
+    public LeaseContract(String date, String customerName, String customerEmail, Vehicle vehicleSold, double totalPrice, double monthlyPayment) {
         super(date, customerName, customerEmail, vehicleSold, totalPrice, monthlyPayment);
     }
 
     @Override
-    void getTotalPrice() {
+    public double getTotalPrice(Vehicle vehicle) {
 
     }
 
     @Override
-    void getMonthlyPayment() {
+    public double getMonthlyPayment(Vehicle vehicle) {
 
     }
 }
