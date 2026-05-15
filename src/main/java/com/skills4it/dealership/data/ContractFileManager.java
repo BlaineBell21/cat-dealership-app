@@ -1,72 +1,49 @@
 package com.skills4it.dealership.data;
 
 import com.skills4it.dealership.models.*;
+import com.skills4it.dealership.ui.UserInterface;
 
-import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.io.PrintWriter;
 import java.nio.file.Path;
-import java.util.List;
 
 import static com.skills4it.dealership.ui.Helpers.*;
 
 public class ContractFileManager {
-    private static final Path INVENTORY_PATH = Path.of("src", "main", "resources", "contracts.csv");
-    private static Dealership dealership;
+    private static final Path CONTRACT_PATH = Path.of("src", "main", "resources", "contracts.csv");
     private static SalesContract salesContract;
 
-    public static void vehicleSellAndLeaseService(String option) {
-        boolean isDone = false;
 
-        while (!isDone) {
-            String name = readString("Enter in your name: ");
+    public static void createSalesContract(String name, String email, Vehicle foundVehicle){
+        boolean isFinancing = readBoolean("Would you like to finance your vehicle? Enter yes/no: ");
 
-            String email = readString("Enter in your email: ");
-
-            int vin = readInt("Enter in the vin of your preferred vehicle: ");
-            Vehicle foundVehicle = dealership.getVehiclesByVin(vin);
-
-            if (foundVehicle != null && option.equals("sell")){
-                boolean isFincanced = readBoolean("Would you like to finance your vehicle? Enter yes/no: ");
-                salesContract.getTotalPrice(foundVehicle);
-
-                LeaseContract salesContract = new SalesContract(printDate(), name, email,foundVehicle , ,"");
-            } else if (vehicleByVin != null && option.equals("lease")) {
-                LeaseContract leaseContract = new SalesContract(printDate(), name, email, foundVehicle, "","");
-            }
-
-        }
+        SalesContract salesContract = new SalesContract(
+                printDate(),
+                name,
+                email,
+                foundVehicle,
+                isFinancing);
+        System.out.println("created contract");
+        saveContract(salesContract);
     }
-    public static void saveContract(Contract contract){
-        SalesContract salesContract = contract instanceof SalesContract ? ((SalesContract) contract) : null;
-        if (salesContract != null){
 
-        }
+    public static void leaseContract(String name, String email, int vin, Vehicle foundVehicle){
 
-        try (BufferedWriter writer = Files.newBufferedWriter(INVENTORY_PATH)) {
-            writer.write(dealership.toCsvHeaderLine());
-            writer.newLine();
+    }
 
-            List<Vehicle> vehicles = dealership.getAllVehicles();
-            for (Vehicle vehicle : vehicles) {
-                writer.write(vehicle.toCsvLine());
-                writer.newLine();
-            }
+    public static void saveContract(Contract contract) {
+        System.out.println("made it to saving");
+        try {
+            FileWriter fileWriter = new FileWriter("contracts.csv", true);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+
+            printWriter.println(contract);
+
+            printWriter.close();
+            System.out.println("contract saved");
         } catch (IOException e) {
-            throw new IllegalStateException("Could not save inventory file: " + INVENTORY_PATH, e);
+            throw new IllegalStateException("Error saving contract to: " + CONTRACT_PATH, e);
         }
-
     }
-    public String saleWriteFormat() {
-        return String.join("|", contractType, printDate(),customerName, costumerEmail,
-                vin,year,make,model,vehicleType,
-                color,vehiclePrice,salesTax,recordingFee,
-                totalPrice,financeOption,monthlyPayment);
-    }
-    public String leaseWriteFormat() {
-        return String.join("|", contractType, printDate(),customerName, costumerEmail,
-                vin,year,make,model,vehicleType,color,vehiclePrice,
-                expectedEndValue, leaseFee,totalPrice,financeOption,monthlyPayment);
-    }
-
 }

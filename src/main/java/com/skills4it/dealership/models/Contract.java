@@ -5,16 +5,23 @@ public abstract class Contract {
     private String customerName;
     private String customerEmail;
     private Vehicle vehicleSold;
-    private double totalPrice;
-    private double monthlyPayment;
+    private boolean isFinanced;
 
-    public Contract(String date, String customerName, String customerEmail, Vehicle vehicleSold, double totalPrice, double monthlyPayment) {
+
+    public Contract(String date, String customerName, String customerEmail, Vehicle vehicleSold, boolean isFinanced) {
         this.date = date;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
         this.vehicleSold = vehicleSold;
-        this.totalPrice = totalPrice;
-        this.monthlyPayment = monthlyPayment;
+        this.isFinanced = isFinanced;
+    }
+
+    public boolean isFinanced() {
+        return isFinanced;
+    }
+
+    public void setFinanced(boolean financed) {
+        isFinanced = financed;
     }
 
     public String getCustomerName() {
@@ -49,15 +56,9 @@ public abstract class Contract {
         this.vehicleSold = vehicleSold;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+    public abstract double getTotalPrice();
 
-    public void setMonthlyPayment(double monthlyPayment) {
-        this.monthlyPayment = monthlyPayment;
-    }
+    public abstract double getMonthlyPayment();
 
-     public abstract double getTotalPrice(Vehicle vehicle);
-
-    public abstract double getMonthlyPayment(Vehicle vehicle);
+    public abstract String toString();
 }

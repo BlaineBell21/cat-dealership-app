@@ -9,6 +9,8 @@ import com.skills4it.dealership.ui.enums.MenuOption;
 
 import java.util.List;
 
+import static com.skills4it.dealership.data.ContractFileManager.createSalesContract;
+import static com.skills4it.dealership.data.ContractFileManager.leaseContract;
 import static com.skills4it.dealership.ui.Helpers.*;
 
 public class UserInterface {
@@ -116,8 +118,8 @@ public class UserInterface {
     }
 
     private void processSellOrLeaseVehiclesRequest() {
-        boolean isDoneChoosing = false;
-        while (!isDoneChoosing) {
+
+        while (true) {
             String option = "";
             int sellOrLease = readInt("Would you like to sell or lease a vehicle?\n" +
                     "1) Sell\n" +
@@ -126,16 +128,39 @@ public class UserInterface {
             switch (sellOrLease) {
                 case 1: //sell
                     option = "sell";
-                    ContractFileManager.vehicleSellAndLeaseService(option);
+                    vehicleSellAndLeaseService(option);
+                    break;
                 case 2://lease
                     option = "lease";
-                    ContractFileManager.vehicleSellAndLeaseService(option);
+                    vehicleSellAndLeaseService(option);
+                    break;
                 default:
                     wrongInput();
             }
         }
     }
+    public void vehicleSellAndLeaseService(String option) {
+        boolean isDone = false;
 
+        String name = readString("Enter in your name: ");
+        String email = readString("Enter in your email: ");
+
+        UserInterface.displayVehicles(dealership.getAllVehicles());
+
+        int vin = readInt("Enter in the vin of your preferred vehicle: ");
+
+        Vehicle foundVehicle = dealership.getVehiclesByVin(vin);
+
+        while (true) {
+            if(option.equals("sell")){
+                createSalesContract(name, email, foundVehicle);
+                return;
+            } else if (option.equals("lease")) {
+                leaseContract(name, email, vin, foundVehicle);
+                return;
+            }
+        }
+    }
 
     private void processAddVehicleRequest() {
         System.out.println("Add a new vehicle");
@@ -179,7 +204,7 @@ public class UserInterface {
         }, () -> System.out.println("No vehicle found with VIN " + vin + "."));
     }
 
-    private void displayVehicles(List<Vehicle> vehicles) {
+    public static void displayVehicles(List<Vehicle> vehicles) {
         if (vehicles == null || vehicles.isEmpty()) {
             System.out.println("No vehicles found.");
             pause();
