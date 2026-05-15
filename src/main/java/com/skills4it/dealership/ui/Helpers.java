@@ -1,6 +1,9 @@
 package com.skills4it.dealership.ui;
 
 import com.skills4it.dealership.models.enums.VehicleType;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 
@@ -95,5 +98,11 @@ public class Helpers {
         System.out.println();
         System.out.print("Press Enter to continue...");
         scanner.nextLine();
+    }
+
+    public static String printDate(){
+        LocalDate date = LocalDate.now();
+       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        return date.format(formatter);
     }
 }

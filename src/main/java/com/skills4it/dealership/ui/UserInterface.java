@@ -1,5 +1,6 @@
 package com.skills4it.dealership.ui;
 
+import com.skills4it.dealership.data.ContractFileManager;
 import com.skills4it.dealership.data.DealershipFileManager;
 import com.skills4it.dealership.models.Dealership;
 import com.skills4it.dealership.models.Vehicle;
@@ -63,6 +64,7 @@ public class UserInterface {
             case FIND_BY_MILEAGE -> processGetByMileageRequest();
             case FIND_BY_TYPE -> processGetByVehicleTypeRequest();
             case LIST_ALL -> processAllVehiclesRequest();
+            case SELL_OR_LEASE_A_VEHICLE -> processSellOrLeaseVehiclesRequest();
             case ADD_VEHICLE -> processAddVehicleRequest();
             case REMOVE_VEHICLE -> processRemoveVehicleRequest();
             case QUIT -> {
@@ -106,6 +108,32 @@ public class UserInterface {
 
     private void processAllVehiclesRequest() {
         displayVehicles(dealership.getAllVehicles());
+    }
+
+
+    private void processLeaseVehicleRequest(){
+        processAllVehiclesRequest();
+    }
+
+    private void processSellOrLeaseVehiclesRequest() {
+        boolean isDoneChoosing = false;
+        while (!isDoneChoosing) {
+            String option = "";
+            String sellOrLease = readString("Would you like to sell or lease a vehicle?\n" +
+                    "1) Sell\n" +
+                    "2) Lease\n" +
+                    "Enter in the number of the option you'd like to choose: ").toLowerCase().trim();
+            switch (sellOrLease) {
+                case "1": //sell
+                    option = "sell";
+                    ContractFileManager.vehicleSellAndLeaseService(option);
+                case "2"://lease
+                    option = "lease";
+                    ContractFileManager.vehicleSellAndLeaseService(option);
+                default:
+                    System.out.println("Incorrect input. Try again.");
+            }
+        }
     }
 
     private void processAddVehicleRequest() {

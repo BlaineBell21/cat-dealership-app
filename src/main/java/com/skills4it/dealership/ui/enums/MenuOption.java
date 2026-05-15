@@ -11,8 +11,9 @@ public enum MenuOption {
     FIND_BY_MILEAGE(5, "Find vehicles by mileage range"),
     FIND_BY_TYPE(6, "Find vehicles by type"),
     LIST_ALL(7, "List all vehicles"),
-    ADD_VEHICLE(8, "Add a vehicle"),
-    REMOVE_VEHICLE(9, "Remove a vehicle"),
+    SELL_OR_LEASE_A_VEHICLE(8, "Sell/lease a vehicle"),
+    ADD_VEHICLE(9, "Add a vehicle"),
+    REMOVE_VEHICLE(0, "Remove a vehicle"),
     QUIT(99, "Quit");
 
     private final int code;
