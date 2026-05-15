@@ -17,14 +17,14 @@ public class ContractFileManager {
 
     public static void createSalesContract(String name, String email, Vehicle foundVehicle){
         boolean isFinancing = readBoolean("Would you like to finance your vehicle? Enter yes/no: ");
-
+        System.out.println(isFinancing);
         SalesContract salesContract = new SalesContract(
                 printDate(),
                 name,
                 email,
                 foundVehicle,
                 isFinancing);
-        System.out.println("created contract");
+        System.out.println(salesContract.isFinanced());
         saveContract(salesContract);
     }
 
@@ -33,12 +33,13 @@ public class ContractFileManager {
     }
 
     public static void saveContract(Contract contract) {
+        System.out.println(contract.isFinanced());
         System.out.println("made it to saving");
         try {
-            FileWriter fileWriter = new FileWriter("contracts.csv", true);
+            FileWriter fileWriter = new FileWriter(CONTRACT_PATH.toFile(), true);
             PrintWriter printWriter = new PrintWriter(fileWriter);
 
-            printWriter.println(contract.toString());
+            printWriter.println(contract);
 
             printWriter.close();
             System.out.println("contract saved");

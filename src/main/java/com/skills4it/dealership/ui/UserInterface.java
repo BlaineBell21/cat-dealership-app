@@ -1,6 +1,5 @@
 package com.skills4it.dealership.ui;
 
-import com.skills4it.dealership.data.ContractFileManager;
 import com.skills4it.dealership.data.DealershipFileManager;
 import com.skills4it.dealership.models.Dealership;
 import com.skills4it.dealership.models.Vehicle;
@@ -145,8 +144,16 @@ public class UserInterface {
         String email = readString("Enter in your email: ");
 
         UserInterface.displayVehicles(dealership.getAllVehicles());
+        int vin = 0;
 
-        int vin = readInt("Enter in the vin of your preferred vehicle: ");
+        while (true) {
+            vin = readInt("Enter in the vin of your preferred vehicle: ");
+
+            if (dealership.findVehicleByVin(vin).isPresent()) {
+                break;
+            }
+            System.out.println("Enter a valid vehicle vin.");
+        }
 
         Vehicle foundVehicle = dealership.getVehiclesByVin(vin);
 

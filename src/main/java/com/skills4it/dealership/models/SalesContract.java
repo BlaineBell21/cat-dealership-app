@@ -15,10 +15,11 @@ public class SalesContract extends Contract{
     private static final double PROCESSING_FEE_10000_OR_MORE = 495.00;
     private static final double PRICE_IS_10000_OR_MORE = .0425;
     private static final double PRICE_IS_UNDER_10000 = .0525;
-    private static double PROCESSING_FEE;
+    private static double processingFee = 0;
 
     public SalesContract(String date, String customerName, String customerEmail, Vehicle vehicleSold, boolean isFinanced) {
         super(date, customerName, customerEmail, vehicleSold, isFinanced);
+        this.isFinanced = isFinanced;
     }
 
     public boolean isFinanced() {
@@ -30,16 +31,11 @@ public class SalesContract extends Contract{
         double salesTax = 0;
         double totalPrice = getVehicleSold().getPrice();
 
-        if (totalPrice < 10000){
-            PROCESSING_FEE = PROCESSING_FEE_UNDER_10000;
-        }else {
-            PROCESSING_FEE = PROCESSING_FEE_10000_OR_MORE;
-        }
-        totalPrice += PROCESSING_FEE + RECORDING_FEE;
-
         salesTax = totalPrice * SALES_TAX_RATE;
-        totalPrice += salesTax;
-        return totalPrice;
+
+        processingFee = (totalPrice < 10000) ? PROCESSING_FEE_UNDER_10000 : PROCESSING_FEE_10000_OR_MORE;
+
+        return totalPrice + salesTax + RECORDING_FEE + processingFee;
     }
     //All loans are at 4.25% for 48 months if the price is $10,000 or more
     //Otherwise they are at 5.25% for 24 month
