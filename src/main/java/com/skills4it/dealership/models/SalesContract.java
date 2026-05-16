@@ -51,7 +51,7 @@ public class SalesContract extends Contract{
         if (isFinanced && basePriceOfVehicle >= 10000){
             totalPrice = basePriceOfVehicle * PRICE_IS_10000_OR_MORE;
             return totalPrice;
-        } else if(isFinanced && totalPrice < 10000){
+        } else if(isFinanced){
             totalPrice = basePriceOfVehicle * PRICE_IS_UNDER_10000;
             return totalPrice;
         }
