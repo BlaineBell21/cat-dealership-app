@@ -8,6 +8,8 @@ import com.skills4it.dealership.ui.enums.MenuOption;
 
 import java.util.List;
 
+import static com.skills4it.dealership.data.ContractFileManager.createSalesContract;
+import static com.skills4it.dealership.data.ContractFileManager.leaseContract;
 import static com.skills4it.dealership.ui.Helpers.*;
 
 public class UserInterface {
@@ -50,6 +52,7 @@ public class UserInterface {
         }
         System.out.println();
     }
+
     private void handleMenuChoice(MenuOption option) {
         if (option == null) {
             System.out.println("Invalid option. Please try again.");
@@ -63,6 +66,7 @@ public class UserInterface {
             case FIND_BY_MILEAGE -> processGetByMileageRequest();
             case FIND_BY_TYPE -> processGetByVehicleTypeRequest();
             case LIST_ALL -> processAllVehiclesRequest();
+            case SELL_OR_LEASE_A_VEHICLE -> processSellOrLeaseVehiclesRequest();
             case ADD_VEHICLE -> processAddVehicleRequest();
             case REMOVE_VEHICLE -> processRemoveVehicleRequest();
             case QUIT -> {
@@ -108,6 +112,60 @@ public class UserInterface {
         displayVehicles(dealership.getAllVehicles());
     }
 
+    private void processSellOrLeaseVehiclesRequest() {
+        while (true) {
+            String option = "";
+            int sellOrLease = readInt("Would you like to sell or lease a vehicle?\n" +
+                    "1) Sell\n" +
+                    "2) Lease\n" +
+                    "Enter in the number of the option you'd like to choose: ");
+            switch (sellOrLease) {
+                case 1: //sell
+                    option = "sell";
+                    vehicleSellAndLeaseService(option);
+                   return;
+                case 2://lease
+                    option = "lease";
+                    vehicleSellAndLeaseService(option);
+                    return;
+                default:
+                    wrongInput();
+            }
+        }
+    }
+
+    public void vehicleSellAndLeaseService(String option) {
+        String name = readString("Enter in your name: ");
+        String email = readString("Enter in your email: ");
+
+        UserInterface.displayVehicles(dealership.getAllVehicles());
+        int vin = 0;
+
+        while (true) {
+            vin = readInt("Enter in the vin of your preferred vehicle: ");
+
+            if (dealership.findVehicleByVin(vin).isPresent()) {
+                break;
+            }
+            System.out.println("Enter a valid vehicle vin.");
+        }
+
+        Vehicle foundVehicle = dealership.getVehiclesByVin(vin);
+
+        while (true) {
+            switch(option){
+                case "sell":
+                    createSalesContract(name, email, foundVehicle);
+                    return;
+                case "lease":
+                    leaseContract(name, email, foundVehicle);
+                    return;
+                default:
+                    wrongInput();
+            }
+        }
+    }
+
     private void processAddVehicleRequest() {
         System.out.println("Add a new vehicle");
 
@@ -150,7 +208,7 @@ public class UserInterface {
         }, () -> System.out.println("No vehicle found with VIN " + vin + "."));
     }
 
-    private void displayVehicles(List<Vehicle> vehicles) {
+    public static void displayVehicles(List<Vehicle> vehicles) {
         if (vehicles == null || vehicles.isEmpty()) {
             System.out.println("No vehicles found.");
             pause();
@@ -169,5 +227,8 @@ public class UserInterface {
         System.out.println("---------------------------------------------------------------------------------------");
         System.out.println("Total vehicles: " + vehicles.size());
         pause();
+    }
+    public static void wrongInput(){
+        System.out.println("Incorrect input. Try again.");
     }
 }

@@ -1,0 +1,50 @@
+package com.skills4it.dealership.data;
+
+import com.skills4it.dealership.models.*;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Path;
+
+import static com.skills4it.dealership.ui.Helpers.*;
+
+public class ContractFileManager {
+    private static final Path CONTRACT_PATH = Path.of("src", "main", "resources", "contracts.csv");
+
+    public static void createSalesContract(String name, String email, Vehicle foundVehicle){
+        boolean isFinancing = readBoolean("Would you like to finance your vehicle? Enter yes/no: ");
+        SalesContract newSalesContract = new SalesContract(
+                printDate(),
+                name,
+                email,
+                foundVehicle,
+                isFinancing);
+        saveContract(newSalesContract);
+    }
+
+    public static void leaseContract(String name, String email, Vehicle foundVehicle){
+        LeaseContract newLeaseContract = new LeaseContract(
+                printDate(),
+                name,
+                email,
+                foundVehicle);
+        saveContract(newLeaseContract);
+
+    }
+
+    public static void saveContract(Contract contract) {
+        System.out.println("made it to saving");
+        try {
+            FileWriter fileWriter = new FileWriter(CONTRACT_PATH.toFile(), true);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+
+            printWriter.println(contract);
+
+            printWriter.close();
+            System.out.println("contract saved");
+        } catch (IOException e) {
+            throw new IllegalStateException("Error saving contract to: " + CONTRACT_PATH, e);
+        }
+    }
+}

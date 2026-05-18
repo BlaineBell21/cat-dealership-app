@@ -77,6 +77,15 @@ public class Dealership {
                 .toList();
     }
 
+    public Vehicle getVehiclesByVin(int vin) {
+        for (Vehicle vehicle : inventory){
+            if (vehicle.getVin() == vin){
+                return vehicle;
+            }
+        }
+        return null;
+    }
+
     public List<Vehicle> getVehiclesByMileage(int minMileage, int maxMileage) {
         return inventory.stream()
                 .filter(vehicle -> vehicle.getOdometer() >= minMileage && vehicle.getOdometer() <= maxMileage)
