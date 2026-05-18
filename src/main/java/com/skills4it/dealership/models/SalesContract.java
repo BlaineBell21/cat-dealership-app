@@ -36,6 +36,7 @@ public class SalesContract extends Contract{
 //        return (getVehicleSold().getPrice() < 10000) ? PROCESSING_FEE_UNDER_10000 : PROCESSING_FEE_10000_OR_MORE;
 //    }
 
+
     public double processingFee(){
         if (getVehicleSold().getPrice() >= 10000){
             return processingFee = 495;
@@ -45,9 +46,9 @@ public class SalesContract extends Contract{
         return 0;
     }
 
-    public double getProcessingFee(){
-        return processingFee;
-    }
+//    public double getProcessingFee(){
+//        return processingFee;
+//    }
 
     @Override
     public double getMonthlyPayment() {
