@@ -2,6 +2,7 @@ package com.skills4it.dealership.data;
 
 import com.skills4it.dealership.models.*;
 
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,7 +21,7 @@ public class ContractFileManager {
                 email,
                 foundVehicle,
                 isFinancing);
-        saveContract(newSalesContract);
+        saveSalesContract(newSalesContract);
     }
 
     public static void leaseContract(String name, String email, Vehicle foundVehicle){
@@ -29,23 +30,38 @@ public class ContractFileManager {
                 name,
                 email,
                 foundVehicle);
-        saveContract(newLeaseContract);
-
+        saveLeaseContract(newLeaseContract);
     }
 
-    public static void saveContract(Contract contract) {
+    public static void saveLeaseContract(LeaseContract contract) {
         try (FileWriter fileWriter = new FileWriter(CONTRACT_PATH.toFile(), true);
              PrintWriter printWriter = new PrintWriter(fileWriter)) {
 
             printWriter.println(contract);
-            Thread.sleep(1000);
 
-            printWriter.close();
+            //printWriter.close();
+            Thread.sleep(1000);
             System.out.println("New contract saved.");
         } catch (IOException e) {
             throw new IllegalStateException("Error saving contract to: " + CONTRACT_PATH, e);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static void saveSalesContract(SalesContract contract) {
+        try (FileWriter fileWriter = new FileWriter(CONTRACT_PATH.toFile(), true);
+             PrintWriter bufferedWriter = new PrintWriter(fileWriter)) {
+
+
+            bufferedWriter.println(contract);
+
+
+            //printWriter.close();
+
+            System.out.println("New contract saved.");
+        } catch (IOException e) {
+            throw new IllegalStateException("Error saving contract to: " + CONTRACT_PATH, e);
         }
     }
 }
