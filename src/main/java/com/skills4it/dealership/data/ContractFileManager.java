@@ -36,7 +36,7 @@ public class ContractFileManager {
     public static void saveLeaseContract(LeaseContract contract) {
         try (FileWriter fileWriter = new FileWriter(CONTRACT_PATH.toFile(), true);
              PrintWriter printWriter = new PrintWriter(fileWriter)) {
-
+            contract.toString();
             printWriter.println(contract);
 
             //printWriter.close();

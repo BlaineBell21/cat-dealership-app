@@ -9,6 +9,7 @@ public class SalesContract extends Contract{
     private static final double PRICE_IS_10000_OR_MORE = .0425;
     private static final double PRICE_IS_UNDER_10000 = .0525;
 
+
     public SalesContract(String date, String customerName, String customerEmail, Vehicle vehicleSold, boolean isFinanced) {
         super(date, customerName, customerEmail, vehicleSold);
         this.isFinanced = isFinanced;
@@ -73,12 +74,26 @@ public class SalesContract extends Contract{
 
                 SALES_TAX_RATE,
                 RECORDING_FEE,
-                getTotalPrice(),
                 processingFee(),
+                getTotalPrice(),
 
                 isFinanced() ? "YES" : "NO",
 
                 getMonthlyPayment()
         );
     }
+//    if (totalPrice < 10000){
+//        PROCESSING_FEE = PROCESSING_FEE_UNDER_10000;
+//    }else {
+//        PROCESSING_FEE = PROCESSING_FEE_10000_OR_MORE;
+//    }
+//    totalPrice += PROCESSING_FEE + RECORDING_FEE;
+//
+//    salesTax = totalPrice * SALES_TAX_RATE;
+//    totalPrice += salesTax;
+//        return totalPrice;
+//
+//    processingFee = (totalPrice < 10000) ? PROCESSING_FEE_UNDER_10000 : PROCESSING_FEE_10000_OR_MORE;
+//
+//        return totalPrice + salesTax + RECORDING_FEE + processingFee;
 }
