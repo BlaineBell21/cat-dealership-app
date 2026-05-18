@@ -4,10 +4,6 @@ package com.skills4it.dealership.models;
 //Recording Fee ($100)
 //Processing fee ($295 for vehicles under $10,000 and $495 for all others
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class SalesContract extends Contract{
     private final boolean isFinanced;
     private static final double SALES_TAX_RATE = 0.05;
@@ -17,8 +13,9 @@ public class SalesContract extends Contract{
     private static final double PRICE_IS_10000_OR_MORE = .0425;
     private static final double PRICE_IS_UNDER_10000 = .0525;
 
+
     public SalesContract(String date, String customerName, String customerEmail, Vehicle vehicleSold, boolean isFinanced) {
-        super(date, customerName, customerEmail, vehicleSold, isFinanced);
+        super(date, customerName, customerEmail, vehicleSold);
         this.isFinanced = isFinanced;
     }
 
@@ -28,35 +25,36 @@ public class SalesContract extends Contract{
 
     @Override
     public double getTotalPrice() {
-        double salesTax = 0;
-        double totalPrice = getVehicleSold().getPrice();
-
-        salesTax = totalPrice * SALES_TAX_RATE;
-
-        double processingFee = (totalPrice < 10000) ? PROCESSING_FEE_UNDER_10000 : PROCESSING_FEE_10000_OR_MORE;
-
-        return totalPrice + salesTax + RECORDING_FEE + processingFee;
+        return basePriceOfVehicle() + salesTax() + RECORDING_FEE + processingFee();
     }
-    //All loans are at 4.25% for 48 months if the price is $10,000 or more
-    //Otherwise they are at 5.25% for 24 month
-    //Whether they want to finance (yes/no)
-    //Monthly payment (if financed) based on:
+
+    public double basePriceOfVehicle(){
+        return getVehicleSold().getPrice();
+    }
+
+    public double salesTax(){
+        return getVehicleSold().getPrice() * SALES_TAX_RATE;
+    }
+
+    public double processingFee(){
+        return (getVehicleSold().getPrice() < 10000) ? PROCESSING_FEE_UNDER_10000 : PROCESSING_FEE_10000_OR_MORE;
+    }
 
     @Override
     public double getMonthlyPayment() {
 
-        double basePriceOfVehicle = getVehicleSold().getPrice();
         double totalPrice = 0;
 
-        if (isFinanced && basePriceOfVehicle >= 10000){
-            totalPrice = basePriceOfVehicle * PRICE_IS_10000_OR_MORE;
+        if (isFinanced && basePriceOfVehicle() >= 10000){
+            totalPrice = basePriceOfVehicle() * PRICE_IS_10000_OR_MORE;
             return totalPrice;
         } else if(isFinanced){
-            totalPrice = basePriceOfVehicle * PRICE_IS_UNDER_10000;
+            totalPrice = basePriceOfVehicle() * PRICE_IS_UNDER_10000;
             return totalPrice;
         }
         return totalPrice;
     }
+
     @Override
     public String toString() {
 
@@ -80,7 +78,7 @@ public class SalesContract extends Contract{
 
                 SALES_TAX_RATE,
                 RECORDING_FEE,
-                0.0,
+                processingFee(),
                 getTotalPrice(),
 
                 isFinanced() ? "YES" : "NO",

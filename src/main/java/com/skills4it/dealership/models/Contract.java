@@ -5,23 +5,13 @@ public abstract class Contract {
     private String customerName;
     private String customerEmail;
     private Vehicle vehicleSold;
-    private boolean isFinanced;
 
 
-    public Contract(String date, String customerName, String customerEmail, Vehicle vehicleSold, boolean isFinanced) {
+    public Contract(String date, String customerName, String customerEmail, Vehicle vehicleSold) {
         this.date = date;
         this.customerName = customerName;
         this.customerEmail = customerEmail;
         this.vehicleSold = vehicleSold;
-        this.isFinanced = isFinanced;
-    }
-
-    public boolean isFinanced() {
-        return isFinanced;
-    }
-
-    public void setFinanced(boolean financed) {
-        isFinanced = financed;
     }
 
     public String getCustomerName() {

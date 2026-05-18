@@ -1,7 +1,6 @@
 package com.skills4it.dealership.data;
 
 import com.skills4it.dealership.models.*;
-import com.skills4it.dealership.ui.UserInterface;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,28 +11,29 @@ import static com.skills4it.dealership.ui.Helpers.*;
 
 public class ContractFileManager {
     private static final Path CONTRACT_PATH = Path.of("src", "main", "resources", "contracts.csv");
-    private static SalesContract salesContract;
-
 
     public static void createSalesContract(String name, String email, Vehicle foundVehicle){
         boolean isFinancing = readBoolean("Would you like to finance your vehicle? Enter yes/no: ");
-        System.out.println(isFinancing);
-        SalesContract salesContract = new SalesContract(
+        SalesContract newSalesContract = new SalesContract(
                 printDate(),
                 name,
                 email,
                 foundVehicle,
                 isFinancing);
-        System.out.println(salesContract.isFinanced());
-        saveContract(salesContract);
+        saveContract(newSalesContract);
     }
 
-    public static void leaseContract(String name, String email, int vin, Vehicle foundVehicle){
+    public static void leaseContract(String name, String email, Vehicle foundVehicle){
+        LeaseContract newLeaseContract = new LeaseContract(
+                printDate(),
+                name,
+                email,
+                foundVehicle);
+        saveContract(newLeaseContract);
 
     }
 
     public static void saveContract(Contract contract) {
-        System.out.println(contract.isFinanced());
         System.out.println("made it to saving");
         try {
             FileWriter fileWriter = new FileWriter(CONTRACT_PATH.toFile(), true);
