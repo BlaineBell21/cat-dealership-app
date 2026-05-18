@@ -1,13 +1,5 @@
 package com.skills4it.dealership.models;
 
-//Expected Ending Value (50% of the original price)
-//Lease Fee (7% of the original price)
-/*
-CONTRACT_TYPE|DATE|CUSTOMER_NAME|CUSTOMER_EMAIL|VIN|YEAR|MAKE|MODEL|VEHICLE_TYPE|COLOR|ODOMETER|
-VEHICLE_PRICE|EXPECTED_ENDING_VALUE|LEASE_FEE|TOTAL_PRICE|MONTHLY_PAYMENT
- */
-
-
 public class LeaseContract extends Contract{
 
     private static final double  LEASE_FEE = .07;

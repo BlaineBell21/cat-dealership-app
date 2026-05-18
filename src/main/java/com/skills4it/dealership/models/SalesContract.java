@@ -1,9 +1,5 @@
 package com.skills4it.dealership.models;
 
-//Sales Tax Amount (5%)
-//Recording Fee ($100)
-//Processing fee ($295 for vehicles under $10,000 and $495 for all others
-
 public class SalesContract extends Contract{
     private final boolean isFinanced;
     private static final double SALES_TAX_RATE = 0.05;

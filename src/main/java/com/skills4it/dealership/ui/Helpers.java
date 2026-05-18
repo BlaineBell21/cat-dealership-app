@@ -113,7 +113,7 @@ public class Helpers {
 
     public static String printDate(){
         LocalDate date = LocalDate.now();
-       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         return date.format(formatter);
     }
 }
