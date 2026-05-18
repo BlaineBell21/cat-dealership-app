@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import static com.skills4it.dealership.ui.Helpers.*;
 
 public class ContractFileManager {
-    private static final Path CONTRACT_PATH = Path.of("src", "main", "resources", "contracts.csv");
+    private static final Path CONTRACT_PATH = Path.of("src/contracts.csv");
 
     public static void createSalesContract(String name, String email, Vehicle foundVehicle){
         boolean isFinancing = readBoolean("Would you like to finance your vehicle? Enter yes/no: ");
@@ -40,11 +40,13 @@ public class ContractFileManager {
             PrintWriter printWriter = new PrintWriter(fileWriter);
 
             printWriter.println(contract);
-
+            Thread.sleep(1000);
             printWriter.close();
             System.out.println("contract saved");
         } catch (IOException e) {
             throw new IllegalStateException("Error saving contract to: " + CONTRACT_PATH, e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }
