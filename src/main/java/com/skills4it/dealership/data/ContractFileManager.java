@@ -34,15 +34,14 @@ public class ContractFileManager {
     }
 
     public static void saveContract(Contract contract) {
-        System.out.println("made it to saving");
-        try {
-            FileWriter fileWriter = new FileWriter(CONTRACT_PATH.toFile(), true);
-            PrintWriter printWriter = new PrintWriter(fileWriter);
+        try (FileWriter fileWriter = new FileWriter(CONTRACT_PATH.toFile(), true);
+             PrintWriter printWriter = new PrintWriter(fileWriter)) {
 
             printWriter.println(contract);
             Thread.sleep(1000);
+
             printWriter.close();
-            System.out.println("contract saved");
+            System.out.println("New contract saved.");
         } catch (IOException e) {
             throw new IllegalStateException("Error saving contract to: " + CONTRACT_PATH, e);
         } catch (InterruptedException e) {
